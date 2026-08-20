@@ -1,0 +1,9 @@
+venv/
+__pycache__/
+*.pyc
+lambdax.db
+*.log
+telemetry_log.jsonl
+.DS_Store
+experiments/results/phase8/raw/
+.pytest_cache/

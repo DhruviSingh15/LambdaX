@@ -1,0 +1,19 @@
+{
+  "dataset": "lambdax_timeseries",
+  "split": "frozen_phase5",
+  "horizons": [5, 10, 30, 60],
+  "arima_orders": [
+    [1,0,0],
+    [1,1,0],
+    [1,1,1],
+    [2,1,1],
+    [2,1,2]
+  ],
+  "xgboost": {
+    "n_estimators": 200,
+    "max_depth": 4,
+    "learning_rate": 0.05
+  },
+  "clip_predictions": true,
+  "random_state": 42
+}

@@ -1,0 +1,6 @@
+model,mae,rmse,burst_recall,burst_precision,avg_forecast_latency_ms,dataset
+naive,3.5,3.8078865529319543,1.0,1.0,0.04820000018905072,hello_1s_features_test.csv
+moving_average,4.594444444444445,5.187395692837985,1.0,1.0,0.012133332954059975,hello_1s_features_test.csv
+moving_average,4.594444444444445,5.187395692837985,1.0,1.0,0.008516666639479809,hello_1s_features_test.csv
+ema,4.349150000000001,5.021357310030825,1.0,1.0,0.0069500007763660205,hello_1s_features_test.csv
+ema,3.74985,4.04784263960446,1.0,1.0,0.004733333601810348,hello_1s_features_test.csv

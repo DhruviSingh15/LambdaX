@@ -1,0 +1,2 @@
+function_name,timestamp,invocations,queue_time_mean,execution_time_mean,cold_start_rate
+hello,2026-08-19 17:05:00,189,1413.6736052376884,236.66224403986854,0.026455026455026454

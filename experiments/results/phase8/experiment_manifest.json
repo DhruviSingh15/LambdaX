@@ -1,0 +1,32 @@
+﻿{
+    "policies":  [
+                     "reactive",
+                     "fixed",
+                     "threshold",
+                     "predictive_ema",
+                     "predictive_hybrid",
+                     "adaptive"
+                 ],
+    "ram_bytes":  8419049472,
+    "seeds":  [
+                  101,
+                  202,
+                  303,
+                  404,
+                  505
+              ],
+    "docker_version":  "Docker version 29.7.2, build a7dcaa6",
+    "cpu":  "Intel(R) Core(TM) i5-10300H CPU @ 2.50GHz",
+    "workloads":  [
+                      "constant_001",
+                      "bursty_001",
+                      "periodic_001",
+                      "poisson_001",
+                      "mixed_001"
+                  ],
+    "git_hash":  {
+
+                 },
+    "python_version":  "Python 3.11.9",
+    "timestamp":  "2026-08-20T13:54:17Z"
+}

@@ -1,0 +1,23 @@
+{
+  "experiment_id": "mixed_001",
+  "workloads": [
+    {
+      "function_name": "hello",
+      "duration_seconds": 30,
+      "pattern": {
+        "type": "periodic",
+        "min_rps": 2,
+        "max_rps": 10,
+        "period_seconds": 15
+      }
+    },
+    {
+      "function_name": "compute",
+      "duration_seconds": 30,
+      "pattern": {
+        "type": "poisson",
+        "lambda": 5
+      }
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "target_url": "http://127.0.0.1:8000",
+  "function_name": "hello",
+  "duration_seconds": 10,
+  "pattern": {
+    "type": "constant",
+    "rps": 5
+  }
+}

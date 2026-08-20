@@ -1,0 +1,22 @@
+{
+    "priority_weights": {
+        "cold_start": 0.25,
+        "sla": 0.35,
+        "queue": 0.2,
+        "demand": 0.2
+    },
+    "sla_thresholds": {
+        "large_positive_ms": 500,
+        "small_positive_ms": 100,
+        "critical_ms": 0
+    },
+    "cost_model": {
+        "sla_violation_penalty": 100.0,
+        "container_second_cost": 0.001,
+        "memory_weight_per_mb": 0.001
+    },
+    "enable_priority": false,
+    "enable_micro_queue": true,
+    "enable_cost_model": true,
+    "enable_predictive_reclaim": true
+}

@@ -1,0 +1,21 @@
+{
+    "experiment_id": "contention_001",
+    "workloads": [
+        {
+            "function_name": "high_pri",
+            "duration_seconds": 30,
+            "pattern": {
+                "type": "poisson",
+                "lambda": 10
+            }
+        },
+        {
+            "function_name": "low_pri",
+            "duration_seconds": 30,
+            "pattern": {
+                "type": "poisson",
+                "lambda": 10
+            }
+        }
+    ]
+}

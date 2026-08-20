@@ -1,0 +1,9 @@
+{
+  "experiment_id": "poisson_001",
+  "duration_seconds": 30,
+  "function_name": "hello",
+  "pattern": {
+    "type": "poisson",
+    "lambda": 10
+  }
+}

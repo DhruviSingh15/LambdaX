@@ -1,0 +1,12 @@
+{
+  "experiment_id": "burst_001",
+  "duration_seconds": 30,
+  "function_name": "hello",
+  "pattern": {
+    "type": "bursty",
+    "baseline_rps": 5,
+    "burst_rps": 50,
+    "burst_duration_seconds": 5,
+    "burst_interval_seconds": 10
+  }
+}

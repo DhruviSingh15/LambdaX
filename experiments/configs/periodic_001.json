@@ -1,0 +1,11 @@
+{
+  "experiment_id": "periodic_001",
+  "duration_seconds": 30,
+  "function_name": "hello",
+  "pattern": {
+    "type": "periodic",
+    "min_rps": 5,
+    "max_rps": 20,
+    "period_seconds": 15
+  }
+}

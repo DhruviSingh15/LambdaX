@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+docker
+pydantic
+aiohttp
+numpy
+pandasstatsmodels
+xgboost
+scikit-learn
