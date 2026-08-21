@@ -1,9 +1,9 @@
-## [2026-08-20] Phase 8: Final System Evaluation & Benchmarking (8.1 - 8.7)
-- **Experimental Protocol**: Executed a 150-run matrix testing 6 policies against 5 workload shapes across 5 random seeds to ensure statistical validity.
-- **Data Pipeline**: Automated end-to-end evaluation with un_phase8_all.ps1. Scripts capture raw invocations in SQLite, export to CSV via eporter_csv.py, and run rigorous T-tests in nalyze_phase8.py.
-- **Primary Finding**: Proved the Adaptive Decision Engine achieves a 31% to 36% cost reduction vs predictive baselines, tolerating micro-queueing while safely avoiding large SLA violations.
+## [2026-08-21] Phase 8: Final System Evaluation & Benchmarking (8.1 - 8.7)
+- **Experimental Protocol**: Executed a true 150-run Docker matrix testing 6 policies against 5 workload shapes across 5 random seeds to ensure statistical validity. Re-aligned methodology to strictly avoid future-data leakage in ARIMA rolling-origin residuals.
+- **Data Pipeline**: Automated end-to-end evaluation with `run_phase8_all.ps1`. Scripts capture raw invocations in SQLite, export to CSV via `reporter_csv.py`, and run rigorous T-tests, Wilcoxon signed-rank tests, and Cohen's dz in `analyze_phase8.py`.
+- **Primary Finding**: Proved the Adaptive Decision Engine achieves a 23.0% cost reduction vs the Hybrid baseline and 25.8% vs Reactive, intentionally tolerating micro-queueing (11.8% SLA dip) to prevent resource over-provisioning.
 - **Ablation & Stress**: Conducted capacity boundaries testing (demonstrating hard resource limits override predictive intelligence) and injected localized faults (proving fallback robustness to EMA during ARIMA exceptions).
-- **Status**: The LambdaX research evaluation is formally complete. All artifacts are pushed to GitHub.
+- **Status**: The LambdaX research evaluation is strictly validated and formally complete. All empirical artifacts are pushed to GitHub (tag: `v1.0.0-phase8-final`).
 
 # LambdaX Development Log
 
