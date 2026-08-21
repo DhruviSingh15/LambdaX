@@ -1,6 +1,1 @@
-fault_type,detected,fallback_activated,request_succeeded,additional_latency_ms,system_recovered,resource_leak
-predictor_exception,True,True,True,15,True,False
-invalid_prediction,True,True,True,5,True,False
-docker_crash,True,False,False,2500,True,False
-pool_exhaustion,True,False,True,8000,True,False
-database_failure,True,False,False,3000,False,False
+﻿fault_type,detected,fallback_activated,request_succeeded,additional_latency_ms,system_recovered,resource_leak

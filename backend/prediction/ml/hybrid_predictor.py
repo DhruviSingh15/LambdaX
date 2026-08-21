@@ -30,37 +30,47 @@ class HybridPredictor(BasePredictor):
         
         min_fit_points = sum(self.arima_order) + 2
         
-        # 1. Fit ARIMA
-        self.arima.fit(y_train)
+        # We will track expanding history and generate strict out-of-sample residuals
+        # We need residuals for each horizon.
+        # To optimize, we can run the expanding window once and collect predictions for all horizons
         
-        # 2. Train horizon-specific XGBoost models
+        all_residuals = {h: np.zeros(n) for h in self.horizons}
+        
+        for i in range(min_fit_points, n - min(self.horizons)):
+            history = y_train[:i+1]
+            
+            try:
+                # 1. Fit ARIMA on exactly the history up to i
+                self.arima.fit(history)
+                # 2. Predict up to max horizon
+                max_h = min(max(self.horizons), n - i - 1)
+                if max_h <= 0: continue
+                arima_preds = self.arima.predict_multi_step(history, steps=max_h)
+                
+                # 3. Calculate residuals for each horizon
+                for h in self.horizons:
+                    if h <= max_h and i + h < n:
+                        arima_pred_h = arima_preds[h - 1]
+                        actual_future = y_train[i + h]
+                        all_residuals[h][i] = actual_future - arima_pred_h
+            except Exception:
+                # Fallback to mean if ARIMA fails for this specific window
+                for h in self.horizons:
+                    if i + h < n:
+                        all_residuals[h][i] = y_train[i + h] - np.mean(history)
+        
+        # 4. Train horizon-specific XGBoost models
         for h in self.horizons:
-            # We can only train if we have enough data to look h steps ahead
             if n <= min_fit_points + h:
                 print(f"[HybridPredictor] Not enough data to train horizon {h}")
                 continue
                 
             xgb = XGBoostPredictor(**self.xgb_params)
-            residuals = np.zeros(n)
             
-            # Generate ARIMA predictions and compute residuals
-            # We are at time i, predicting i+h
-            for i in range(min_fit_points, n - h):
-                history = y_train[:i+1] # history up to and including time i
-                
-                try:
-                    # predict h steps ahead
-                    arima_pred = self.arima.predict_multi_step(history, steps=h)[-1]
-                except Exception:
-                    arima_pred = np.mean(history)
-                    
-                actual_future = y_train[i + h]
-                residuals[i] = actual_future - arima_pred
-                
             # Create training df for XGBoost
             # features at t -> predict residual at t+h
             residual_df = train_df.copy()
-            residual_df[target_col] = residuals
+            residual_df[target_col] = all_residuals[h]
             
             # Since we only computed residuals up to n-h-1, we slice the dataframe
             # XGBoost should only learn from valid target rows

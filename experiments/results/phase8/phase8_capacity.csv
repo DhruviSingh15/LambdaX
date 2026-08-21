@@ -1,16 +1,1 @@
-experiment_id,capacity,seed,function,sla_compliance,cold_start_rate,p99_latency,p95_queue,container_seconds
-cap2_101,2,101,hello,30.5,3.0,8000,6000,60
-cap2_202,2,202,hello,30.5,3.0,8000,6000,60
-cap2_303,2,303,hello,30.5,3.0,8000,6000,60
-cap2_404,2,404,hello,30.5,3.0,8000,6000,60
-cap2_505,2,505,hello,30.5,3.0,8000,6000,60
-cap5_101,5,101,hello,65.0,4.5,4000,2500,100
-cap5_202,5,202,hello,65.0,4.5,4000,2500,100
-cap5_303,5,303,hello,65.0,4.5,4000,2500,100
-cap5_404,5,404,hello,65.0,4.5,4000,2500,100
-cap5_505,5,505,hello,65.0,4.5,4000,2500,100
-cap10_101,10,101,hello,86.0,5.0,1800,500,140
-cap10_202,10,202,hello,86.0,5.0,1800,500,140
-cap10_303,10,303,hello,86.0,5.0,1800,500,140
-cap10_404,10,404,hello,86.0,5.0,1800,500,140
-cap10_505,10,505,hello,86.0,5.0,1800,500,140
+﻿experiment_id,capacity,seed,function,sla_compliance,cold_start_rate,p99_latency,p95_queue,container_seconds

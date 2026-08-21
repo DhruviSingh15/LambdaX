@@ -47,6 +47,12 @@ def analyze_results(csv_path, out_dir):
             # T-test
             t_stat, p_val = stats.ttest_rel(adp_vals, base_vals)
             
+            # Wilcoxon signed-rank test
+            try:
+                w_stat, w_p_val = stats.wilcoxon(diff)
+            except Exception:
+                w_p_val = float('nan')
+            
             # Effect size (Cohen's d)
             s_diff = np.std(diff, ddof=1)
             effect_size = mean_diff / s_diff if s_diff > 0 else 0
@@ -64,7 +70,9 @@ def analyze_results(csv_path, out_dir):
                 'ci_low': ci_low,
                 'ci_high': ci_high,
                 'effect_size': effect_size,
-                'p_value': p_val
+                'p_value_ttest': p_val,
+                'p_value_wilcoxon': w_p_val,
+                'n_pairs': len(diff)
             })
             
     pd.DataFrame(results).to_csv(f"{out_dir}/phase8_statistics.csv", index=False)

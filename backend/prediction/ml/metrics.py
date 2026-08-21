@@ -1,13 +1,16 @@
 import numpy as np
 
-def calculate_metrics(y_true, y_pred, k_sigma=3.0, latencies=None):
+def calculate_metrics(y_true, y_pred, k_sigma=3.0, latencies=None, frozen_threshold=None):
     mae = np.mean(np.abs(y_true - y_pred))
     rmse = np.sqrt(np.mean((y_true - y_pred)**2))
     
     # Burst metrics
-    mean = np.mean(y_true)
-    std = np.std(y_true)
-    threshold = mean + k_sigma * std
+    if frozen_threshold is not None:
+        threshold = frozen_threshold
+    else:
+        mean = np.mean(y_true)
+        std = np.std(y_true)
+        threshold = mean + k_sigma * std
     
     actual_bursts = (y_true > threshold).astype(int)
     predicted_bursts = (y_pred > threshold).astype(int)
@@ -29,11 +32,13 @@ def calculate_metrics(y_true, y_pred, k_sigma=3.0, latencies=None):
     for i in range(len(actual_bursts)):
         if actual_bursts[i] == 1 and (i == 0 or actual_bursts[i-1] == 0):
             # Burst started at i
-            # Look backwards from i to see if the predictor predicted a burst beforehand
+            # Look forwards from max(0, i-30) up to i to find the FIRST prediction
             lead = 0
-            for j in range(i, max(-1, i-30), -1):
+            start_search = max(0, i-30)
+            for j in range(start_search, i + 1):
                 if predicted_bursts[j] == 1:
                     lead = i - j
+                    break
             lead_times.append(lead)
             
     avg_lead_time = np.mean(lead_times) if lead_times else 0.0

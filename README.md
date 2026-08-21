@@ -17,11 +17,13 @@ The project was developed in 8 rigorous phases:
 - **Phase 7**: Adaptive Decision Engine (Micro-queueing + SLA/Cost Optimization)
 - **Phase 8**: Final System Evaluation & Benchmarking
 
-## Phase 8 Evaluation Results
+## Phase 8 Evaluation Results (Empirical)
 In a 150-run rigorously paired benchmark matrix comparing the Adaptive engine against standard industry baselines:
-- **Cost Reduction**: The Adaptive policy reduced total infrastructure cost (container-seconds) by **31.3%** compared to Reactive, and **36.0%** compared to naive ML-Predictive policies.
-- **Latency Optimization**: The Adaptive policy reduced cold start rates by **59.2%** compared to Reactive.
-- **Pareto Efficiency**: The Adaptive policy successfully identified the mathematical Pareto-frontier, demonstrating that it can intelligently tolerate a minor SLA dip (micro-queueing) to avoid massive infrastructure over-provisioning when ML forecasting variance is high.
+- **Cost Reduction**: The Adaptive policy reduced total infrastructure cost (container-seconds) by **25.8%** compared to Reactive, **39.5%** compared to EMA Predictive, and **23.0%** against the optimized Hybrid ML Predictive baseline.
+- **Latency Optimization**: The Adaptive policy reduced cold start rates by **26.3%** compared to Reactive and **17.9%** compared to the Hybrid model.
+- **Pareto Efficiency**: The Adaptive policy successfully identified the mathematical Pareto-frontier, intentionally tolerating a minor 11.8% dip in strict SLA compliance (via micro-queueing) to avoid massive infrastructure over-provisioning when ML forecasting variance was high. (Statistically significant at $p < 0.01$).
+
+*Note on Configuration: The default `adaptive` policy in `config.json` uses `enable_priority: false` to ensure fair apples-to-apples comparison against baselines. Priority-based preemption is specifically activated during priority ablation tests.*
 
 All raw data, validation tests, capacity stress tests, and fault-injection analyses are available in `experiments/results/phase8/`.
 

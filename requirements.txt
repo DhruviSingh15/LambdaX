@@ -4,6 +4,7 @@ docker
 pydantic
 aiohttp
 numpy
-pandasstatsmodels
+pandas
+statsmodels
 xgboost
 scikit-learn

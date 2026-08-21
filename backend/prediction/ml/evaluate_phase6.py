@@ -16,7 +16,7 @@ from backend.prediction.naive import NaivePredictor
 from backend.prediction.moving_average import MovingAveragePredictor
 from backend.prediction.exponential_smoothing import ExponentialSmoothingPredictor
 
-def evaluate_model_streaming(model_name, model_obj, df, target_col='invocations', horizon=1):
+def evaluate_model_streaming(model_name, model_obj, df, target_col='invocations', horizon=1, frozen_threshold=None):
     y_true = df[target_col].values
     n = len(y_true)
     
@@ -74,7 +74,7 @@ def evaluate_model_streaming(model_name, model_obj, df, target_col='invocations'
     y_true_aligned = y_true[(horizon - 1):]
     latencies_aligned = latencies[:valid_n]
     
-    metrics = calculate_metrics(y_true_aligned, y_pred_aligned, latencies=latencies_aligned)
+    metrics = calculate_metrics(y_true_aligned, y_pred_aligned, latencies=latencies_aligned, frozen_threshold=frozen_threshold)
     metrics['model'] = model_name
     metrics['horizon'] = horizon
     return metrics, y_pred
@@ -126,19 +126,25 @@ def main():
     horizons = config['horizons']
     results = []
     
+    # Freeze burst threshold from training data
+    train_y = train_feats['invocations'].values
+    train_mean = np.mean(train_y)
+    train_std = np.std(train_y)
+    frozen_threshold = train_mean + 3.0 * train_std
+    
     # Also evaluate on horizon=1 to get diagnostics
     print("Running Horizon=1 for Diagnostics...")
-    _, arima_preds = evaluate_model_streaming("ARIMA", arima, test_feats, horizon=1)
+    _, arima_preds = evaluate_model_streaming("ARIMA", arima, test_feats, horizon=1, frozen_threshold=frozen_threshold)
     print_diagnostics(test_feats['invocations'].values, arima_preds, "ARIMA")
     
-    _, hybrid_preds = evaluate_model_streaming("Hybrid", hybrid, test_feats, horizon=1)
+    _, hybrid_preds = evaluate_model_streaming("Hybrid", hybrid, test_feats, horizon=1, frozen_threshold=frozen_threshold)
     print_diagnostics(test_feats['invocations'].values, hybrid_preds, "Hybrid")
     
     print("Evaluating over all Horizons...")
     for h in horizons:
         for m_name, m_obj in models.items():
             print(f"Evaluating {m_name} (h={h})...")
-            metrics, _ = evaluate_model_streaming(m_name, m_obj, test_feats, horizon=h)
+            metrics, _ = evaluate_model_streaming(m_name, m_obj, test_feats, horizon=h, frozen_threshold=frozen_threshold)
             if metrics:
                 results.append(metrics)
                 
