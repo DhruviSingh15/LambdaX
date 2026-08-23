@@ -40,6 +40,7 @@ def _create_trained_hybrid():
         return ExponentialSmoothingPredictor() # Fallback
 
 from backend.scheduler.adaptive.adaptive_policy import AdaptivePolicy
+from backend.scheduler.mpc.mpc_policy import MPCPolicy
 
 class PolicyManager:
     def __init__(self):
@@ -53,13 +54,29 @@ class PolicyManager:
             "predictive_ema": PredictivePolicy(ExponentialSmoothingPredictor(alpha=0.5)),
             "predictive_hybrid": PredictivePolicy(_create_trained_hybrid()),
             "adaptive": AdaptivePolicy(_create_trained_hybrid()),
+            "mpc": MPCPolicy(_create_trained_hybrid()),
             # Test Policies
             "test_crashing": PredictivePolicy(CrashingPredictor()),
             "test_invalid": PredictivePolicy(InvalidPredictor()),
             "test_zero": PredictivePolicy(ZeroPredictor())
         }
+        self.last_forecasts = {}
         
     def get_policy(self, policy_name: str):
         return self.policies.get(policy_name, self.policies["reactive"])
+        
+    def set_last_forecast(self, func_id: str, history: list, forecast: list):
+        self.last_forecasts[func_id] = {
+            "history": history[-10:] if history else [],
+            "forecast": forecast
+        }
+        
+    def get_last_forecast(self, func_id: str = None):
+        if not func_id:
+            # return first available if none specified
+            keys = list(self.last_forecasts.keys())
+            if not keys: return {"history": [], "forecast": []}
+            return self.last_forecasts[keys[0]]
+        return self.last_forecasts.get(func_id, {"history": [], "forecast": []})
 
 policy_manager = PolicyManager()

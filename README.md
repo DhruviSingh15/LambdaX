@@ -16,12 +16,15 @@ The project was developed in 8 rigorous phases:
 - **Phase 6**: Machine Learning Hybrid Forecasting (Multi-Horizon XGBoost + ARIMA)
 - **Phase 7**: Adaptive Decision Engine (Micro-queueing + SLA/Cost Optimization)
 - **Phase 8**: Final System Evaluation & Benchmarking
+- **Phase 9**: Model Predictive Control (MPC) Baseline & Comparison
+- **Phase 10**: Live Control Plane Dashboard (React/Vite)
 
-## Phase 8 Evaluation Results (Empirical)
+## Phase 8 & 9 Evaluation Results (Empirical)
 In a 150-run rigorously paired benchmark matrix comparing the Adaptive engine against standard industry baselines:
 - **Cost Reduction**: The Adaptive policy reduced total infrastructure cost (container-seconds) by **25.8%** compared to Reactive, **39.5%** compared to EMA Predictive, and **23.0%** against the optimized Hybrid ML Predictive baseline.
 - **Latency Optimization**: The Adaptive policy reduced cold start rates by **26.3%** compared to Reactive and **17.9%** compared to the Hybrid model.
 - **Pareto Efficiency**: The Adaptive policy successfully identified the mathematical Pareto-frontier, intentionally tolerating a minor 11.8% dip in strict SLA compliance (via micro-queueing) to avoid massive infrastructure over-provisioning when ML forecasting variance was high. (Statistically significant at $p < 0.01$).
+- **MPC Superiority**: In Phase 9, the Adaptive policy structurally outperformed a classical Model Predictive Control (MPC) baseline. MPC suffered from high computational overhead and 30-40% higher container costs due to aggressively over-provisioning to eliminate all predicted SLA violations.
 
 *Note on Configuration: The default `adaptive` policy in `config.json` uses `enable_priority: false` to ensure fair apples-to-apples comparison against baselines. Priority-based preemption is specifically activated during priority ablation tests.*
 

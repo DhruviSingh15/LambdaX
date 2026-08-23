@@ -1,0 +1,21 @@
+{
+    "duration_seconds": 60,
+    "workloads": [
+        {
+            "function_name": "hello",
+            "pattern": {
+                "type": "periodic",
+                "base_rps": 8.0,
+                "amplitude": 6.0,
+                "period_seconds": 20.0
+            }
+        },
+        {
+            "function_name": "compute",
+            "pattern": {
+                "type": "poisson",
+                "lambda_rps": 6.0
+            }
+        }
+    ]
+}

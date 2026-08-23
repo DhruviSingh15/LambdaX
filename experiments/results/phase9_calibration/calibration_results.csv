@@ -1,0 +1,7 @@
+﻿experiment_id,policy,workload,seed,repetition,function,sla_compliance,cold_start_rate,p50_latency,p95_latency,p99_latency,p95_queue,container_seconds,invocation_count
+mpc_SetA_periodic_001_999,mpc_SetA,periodic_001,999,1,hello,51.33,6.67,959.37,2586.89,2867.80,2342.81,343.86,150
+mpc_SetA_mixed_001_999,mpc_SetA,mixed_001,999,1,hello,81.65,9.17,587.52,1476.51,2119.88,1036.58,298.12,109
+mpc_SetB_periodic_001_999,mpc_SetB,periodic_001,999,1,hello,53.85,6.41,899.99,2281.06,2548.41,1981.51,353.34,156
+mpc_SetB_mixed_001_999,mpc_SetB,mixed_001,999,1,hello,90.10,8.91,582.76,1280.36,1716.61,856.76,290.97,101
+mpc_SetC_periodic_001_999,mpc_SetC,periodic_001,999,1,hello,59.74,6.49,875.64,2245.30,2783.67,1992.27,356.22,154
+mpc_SetC_mixed_001_999,mpc_SetC,mixed_001,999,1,hello,90.55,7.09,496.58,1123.89,1372.93,810.14,292.40,127

@@ -1,0 +1,1 @@
+﻿{"horizon": 4, "step_seconds": 5, "cost_weight": 1.0, "latency_weight": 2.0, "sla_weight": 4.0, "queue_weight": 2.0, "max_start_rate": 5, "max_prewarm_per_step": 3}

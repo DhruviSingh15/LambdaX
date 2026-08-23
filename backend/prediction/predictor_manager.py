@@ -73,7 +73,17 @@ class PredictorManager:
         """
         try:
             history = self._get_recent_rps_history(function_id)
-            predicted_rps = self.predictor.predict(history, horizon=self.horizon_seconds)
+            # Generate multi-step forecast for the dashboard
+            forecast_array = []
+            for h in range(1, self.horizon_seconds + 1):
+                forecast_array.append(self.predictor.predict(history, horizon=h))
+                
+            # Expose to dashboard
+            from backend.scheduler.policy_manager import policy_manager
+            policy_manager.set_last_forecast(function_id, history, forecast_array)
+            
+            # Use max forecast for capacity provisioning
+            predicted_rps = max(forecast_array) if forecast_array else 0
             desired_capacity = self.capacity_estimator.estimate_capacity(predicted_rps)
             return desired_capacity
         except Exception as e:
